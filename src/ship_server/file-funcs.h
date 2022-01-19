@@ -327,6 +327,7 @@ void load_config_file()
 							gets   (&dp[0]);
 							printf ("\n\n");
 						}
+						printf(" Experience multiplier: %dx\n", EXPERIENCE_RATE);
 						break;
 					case 0x19:  // NiGHTS skin support
 						ship_support_extnpc = atoi (&config_data[0]);

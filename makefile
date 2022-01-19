@@ -25,44 +25,44 @@ SHIP_H = $(SHIP_SRC_DIR)/resource.h $(SHIP_SRC_DIR)/pso_crypt.h $(SHIP_SRC_DIR)/
 FUNC_H = $(SHIP_SRC_DIR)/funcs1.h $(SHIP_SRC_DIR)/funcs2.h $(SHIP_SRC_DIR)/funcs3.h $(SHIP_SRC_DIR)/commands.h \
          $(SHIP_SRC_DIR)/file-funcs.h $(SHIP_SRC_DIR)/load-funcs.h $(SHIP_SRC_DIR)/mag-funcs.h $(SHIP_SRC_DIR)/string-funcs.h
 
-all: account_add login char_export convert_quest convert_unitxt make_key newtable patch ship
+all: ship #account_add login char_export convert_quest convert_unitxt make_key newtable patch ship
 
 .SECONDEXPANSION:
 
 account_add: $$@.o md5.o
 	$(CC) -o $@ $< $(MYSQL) md5.o
-	cp $@.exe $(LOGIN_DIR)
+#	cp $@.exe $(LOGIN_DIR)
 
 char_export convert_quest: $$@.o md5.o
 	$(CC) -o $@ $< $(MYSQL) md5.o
-	cp $@.exe $(UTIL_DIR)
+#	cp $@.exe $(UTIL_DIR)
 
 patch: patch_server.o $(PATCH_H)
 	$(CC) -o $@ $< $(WINSOCK)
-	cp $@.exe $(LOGIN_DIR)
+#	cp $@.exe $(LOGIN_DIR)
 
 login: login_server.o md5.o $(LOGIN_H)
 	$(CC) -o $@ $< $(WINSOCK) $(MYSQL) md5.o
-	cp $@.exe $(LOGIN_DIR)
+#	cp $@.exe $(LOGIN_DIR)
 
 ship: mtwist.o ship_server.o $(SHIP_H)
 	$(CC) -o $@ mtwist.o ship_server.o $(WINSOCK)
-	cp $@.exe $(SHIP_DIR)
+#	cp $@.exe $(SHIP_DIR)
 
 ship.d: ship_server.d.o mtwist.o $(SHIP_H)
 	$(CC) -o $@ $< $(WINSOCK) mtwist.o
 
 make_key: mtwist.o make_key.o
 	$(CC) -o $@ $^ $(MYSQL)
-	cp $@.exe $(LOGIN_DIR)
+#	cp $@.exe $(LOGIN_DIR)
 
 newtable: mtwist.o newtable.o
 	$(CC) -o $@ $^
-	cp $@.exe $(UTIL_DIR)
+#	cp $@.exe $(UTIL_DIR)
 
 convert_unitxt: convert_unitxt.o
 	$(CC) -o $@ $^
-	cp $@.exe $(UTIL_DIR)
+#	cp $@.exe $(UTIL_DIR)
 
 patch_server.o: $(SRC_DIR)/$$*/$$*.c $(PATCH_H)
 	$(CC) -c $(INCLUDES) $<

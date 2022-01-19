@@ -821,7 +821,7 @@ void LoadQuests (const char* filename, unsigned category)
 					}
 					else
 					{
-						printf ("Non-fatal: Alternate quest language file %s is missing.\n", qfile4);
+						//printf ("Non-fatal: Alternate quest language file %s is missing.\n", qfile4);
 					}
 				}
 			}

@@ -11,11 +11,13 @@ void Send06 (CLIENT* client)
 	unsigned short target;
 	unsigned myCmdArgs, itemNum, connectNum, gc_num;
 	unsigned short npcID;
+	unsigned short lang;
 	unsigned max_send;
 	CLIENT* lClient;
 	int i, z, commandLen, ignored, found_ban, writeData;
 	LOBBY* l;
 	INVENTORY_ITEM ii;
+	unsigned int sectionID;
 
 	writeData = 0;
 	fp = NULL;
@@ -64,7 +66,7 @@ void Send06 (CLIENT* client)
 			// Until you reach a 0, count the command length
 			
 			if (client->decryptbuf[(0x14+ch)] != 0x00)
-				cmdBuf[commandLen++] = client->decryptbuf[(0x14+ch)];  // Anotehr global lvariable, also size of 4000
+				cmdBuf[commandLen++] = client->decryptbuf[(0x14+ch)];  // Another global lvariable, also size of 4000
 			else
 				break;
 		}
@@ -137,19 +139,19 @@ void Send06 (CLIENT* client)
 					SendB0 ("Need language digit.", client);
 				else
 				{
-					npcID = atoi ( myArgs[0] );
+					lang = atoi ( myArgs[0] );
 
-					if ( npcID > numLanguages ) npcID = 1;
+					if ( lang > numLanguages ) lang = 1;
 
-					if ( npcID == 0 )
-						npcID = 1;
+					if ( lang == 0 )
+						lang = 1;
 
-					npcID--;
+					lang--;
 
-					client->character.lang = (unsigned char) npcID;
+					client->character.lang = (unsigned char) lang;
 
 					SendB0 ("Current language:\n", client);
-					SendB0 (languageNames[npcID], client);
+					SendB0 (languageNames[lang], client);
 
 				}
 			}
@@ -1120,6 +1122,62 @@ void Send06 (CLIENT* client)
 							sprintf (&mesg[i], "%f%%", val/10.0);
 							SendEE (mesg, client);
 						}
+					}
+				}
+			}
+
+			if (!strcmp(myCommand, "sectionid"))
+			{
+				if ( myCmdArgs == 0 )
+					SendB0 ("Need to specify Section ID...", client);
+				else
+				{
+					sectionID = atoi(myArgs[0]);
+					if ((sectionID >= ID_Viridia) && (sectionID <= ID_Whitill))
+					{
+						client->character.sectionID = sectionID;
+						WriteGM("User %u has requested to set sectionid %d", client->guildcard, sectionID);
+						SendB0 ("Please change blocks to reflect changes.", client);
+					}
+					else
+						SendB0 ("Invalid Section ID specified.", client);
+				}
+			}
+
+			if (!strcmp(myCommand, "setname"))
+			{
+				if ( myCmdArgs == 0 )
+					SendB0 ("Need to specify new character name...", client);
+				else
+				{
+					ch = 0;
+					while (myArgs[0][ch] != 0) {
+						client->character.name[ch*2+4] = myArgs[0][ch];
+						client->character.name[ch*2+4+1] = 0;
+						ch++;
+					}
+					client->character.name[ch*2+4] = 0;
+					client->character.name[ch*2+4+1] = 0;
+					WriteLog("User %u has requested to setname %s", client->guildcard, myArgs[0]);
+					SendB0 ("Please change blocks to reflect changes.", client);
+				}
+			}
+
+			if (!strcmp(myCommand, "help")) {
+				if (myArgs[0] == NULL) {
+					SendB0 ("Usage: /help 1-3", client);
+				}
+				else {
+					switch (atoi(myArgs[1])) {
+					case 1:
+						SendB0 ("bank, arrow, setname, sectionid, setpass, item, give, levelup", client);
+						break;
+					case 2:
+						SendB0 ("npc, event, redbox, lang, warp(me/all), dc(all), (ip/hw)ban, debug", client);
+						break;
+					case 3:
+						SendB0 ("announce/global, update(localgms/masks), reloadconfig, set(val/rare), ignore, stfu", client);
+						break;
 					}
 				}
 			}

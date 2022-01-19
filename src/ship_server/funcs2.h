@@ -1503,6 +1503,9 @@ void LogonProcessPacket (SERVER* ship)
 
 							//client->character.lang = 0x00;
 
+							//default to shared bank
+							client->bankType = 1;
+
 							cd = (unsigned char*) &client->character.packetSize;
 
 							cd[(8*28)+0x0F]  = client->matuse[0];
