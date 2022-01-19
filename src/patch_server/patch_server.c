@@ -1460,10 +1460,10 @@ int main( int argc, char * argv[] )
 						// Read shit.
 						if ( ( pkt_len = recv (workConnect->plySockfd, &tmprcv[0], TCP_BUFFER_SIZE - 1, 0) ) <= 0 )
 						{
-							wserror = WSAGetLastError();
+							/*wserror = WSAGetLastError();
 							printf ("Could not read data from client...\n");
 							printf ("Socket Error %u.\n", wserror );
-							initialize_connection (workConnect);
+							initialize_connection (workConnect);*/
 						}
 						else
 						{

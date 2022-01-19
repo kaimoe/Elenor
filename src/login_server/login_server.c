@@ -5122,9 +5122,7 @@ main( int argc, char * argv[] )
 	printf ("Loading configuration from tethealla.ini ...");
 	int config_index = 0;
 	char config_data[255];
-	unsigned ch;
 
-	FILE* fp;
 
 	if ( ( fp = fopen ("tethealla.ini", "r" ) ) == NULL )
 	{
