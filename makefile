@@ -25,7 +25,7 @@ SHIP_H = $(SHIP_SRC_DIR)/resource.h $(SHIP_SRC_DIR)/pso_crypt.h $(SHIP_SRC_DIR)/
 FUNC_H = $(SHIP_SRC_DIR)/funcs1.h $(SHIP_SRC_DIR)/funcs2.h $(SHIP_SRC_DIR)/funcs3.h $(SHIP_SRC_DIR)/commands.h \
          $(SHIP_SRC_DIR)/file-funcs.h $(SHIP_SRC_DIR)/load-funcs.h $(SHIP_SRC_DIR)/mag-funcs.h $(SHIP_SRC_DIR)/string-funcs.h
 
-all: ship #account_add login char_export convert_quest convert_unitxt make_key newtable patch ship
+all: patch ship #account_add login char_export convert_quest convert_unitxt make_key newtable patch ship
 
 .SECONDEXPANSION:
 

@@ -1462,8 +1462,8 @@ int main( int argc, char * argv[] )
 						{
 							/*wserror = WSAGetLastError();
 							printf ("Could not read data from client...\n");
-							printf ("Socket Error %u.\n", wserror );
-							initialize_connection (workConnect);*/
+							printf ("Socket Error %u.\n", wserror );*/
+							initialize_connection (workConnect);
 						}
 						else
 						{
